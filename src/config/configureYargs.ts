@@ -83,6 +83,11 @@ export default async () => {
       type: 'string',
       description:
         'Add a custom prompt to the LLM (e.g. "Only describe the background")',
+    })
+    .option('assistant-id', {
+      alias: 'i',
+      type: 'string',
+      description: 'Set the OpenAI assistant ID to use',
     });
 
   const argv = parser.parse();
@@ -139,6 +144,11 @@ export default async () => {
 
   if (argv['custom-prompt']) {
     config.defaultCustomPrompt = argv['custom-prompt'];
+    await saveConfig({ config });
+  }
+
+  if (argv['assistant-id']) {
+    config.defaultAssistantId = argv['assistant-id'];
     await saveConfig({ config });
   }
 

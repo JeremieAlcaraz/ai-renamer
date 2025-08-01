@@ -55,4 +55,5 @@ deno run -A src/core/index.ts ./path/to/file
 ```
 
 Set environment variables or use CLI options to configure another provider, API
-keys, or custom prompts.
+keys, custom prompts, or an OpenAI assistant ID with `--assistant-id`.
+

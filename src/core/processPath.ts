@@ -14,6 +14,7 @@ export default async ({
   defaultProvider,
   defaultCustomPrompt,
   defaultIncludeSubdirectories,
+  defaultAssistantId,
 }: any) => {
   try {
     const provider = defaultProvider || 'ollama';
@@ -58,6 +59,10 @@ export default async ({
       console.log(`⚪ Custom Prompt: ${customPrompt}`);
     }
 
+    const assistantId = defaultAssistantId || null;
+    if (assistantId) {
+      console.log(`⚪ Assistant ID: ${assistantId}`);
+    }
     console.log('--------------------------------------------------');
 
     const stats = await Deno.stat(inputPath);
@@ -73,6 +78,7 @@ export default async ({
       inputPath,
       includeSubdirectories,
       customPrompt,
+      assistantId,
     };
 
     if (stats.isDirectory) {
