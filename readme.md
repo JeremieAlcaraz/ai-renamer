@@ -107,14 +107,6 @@ snakeCase: two_words
 trainCase: Two-Words
 ```
 
-## Contribution
-
-Feel free to contribute. Open a new [issue](https://github.com/ozgrozer/ai-renamer/issues), or make a [pull request](https://github.com/ozgrozer/ai-renamer/pulls).
-
-## License
-
-[GPL-3.0](https://github.com/ozgrozer/ai-renamer/blob/main/license)
-
 ## Project Goals
 
 The main objectives of this migration are:
