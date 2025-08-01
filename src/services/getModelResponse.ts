@@ -1,99 +1,105 @@
-import { Buffer } from 'https://deno.land/std/io/buffer.ts';
+import { encodeBase64 } from 'https://deno.land/std/encoding/base64.ts';
 
 const ollamaApis = async ({ model, prompt, images, baseURL }: any) => {
   try {
-    const url = `${baseURL}/api/generate`
+    const url = `${baseURL}/api/generate`;
 
     const data: any = {
       model,
       prompt,
-      stream: false
-    }
+      stream: false,
+    };
 
     if (images && images.length > 0) {
       data.images = await Promise.all(images.map(async (imagePath: string) => {
-        const imageData = await Deno.readFile(imagePath)
-        return new Buffer(imageData).toString('base64')
-      }))
+        const imageData = await Deno.readFile(imagePath);
+        return encodeBase64(imageData);
+      }));
     }
 
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
+      body: JSON.stringify(data),
+    });
 
-    const result = await response.json()
+    const result = await response.json();
     if (!response.ok) {
-      throw new Error(result.error?.message || result.error || 'Failed to fetch from Ollama')
+      throw new Error(
+        result.error?.message || result.error || 'Failed to fetch from Ollama',
+      );
     }
 
-    return result.response
+    return result.response;
   } catch (err) {
-    throw new Error(err.message)
+    throw new Error((err as Error).message);
   }
-}
+};
 
 const openaiApis = async ({ model, prompt, images, apiKey, baseURL }: any) => {
   try {
-    const url = `${baseURL}/v1/chat/completions`
+    const url = `${baseURL}/v1/chat/completions`;
 
     const data: any = {
       model,
-      stream: false
-    }
+      stream: false,
+    };
 
     const messages: any[] = [{
       role: 'user',
       content: [
-        { type: 'text', text: prompt }
-      ]
-    }]
+        { type: 'text', text: prompt },
+      ],
+    }];
 
     if (images && images.length > 0) {
       for (const imagePath of images) {
-        const imageData = await Deno.readFile(imagePath)
+        const imageData = await Deno.readFile(imagePath);
         messages[0].content.push({
           type: 'image_url',
-          image_url: { url: `data:image/jpeg;base64,${new Buffer(imageData).toString('base64')}` }
-        })
+          image_url: {
+            url: `data:image/jpeg;base64,${encodeBase64(imageData)}`,
+          },
+        });
       }
     }
 
-    data.messages = messages
+    data.messages = messages;
 
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...(apiKey && { Authorization: `Bearer ${apiKey}` })
+        ...(apiKey && { Authorization: `Bearer ${apiKey}` }),
       },
-      body: JSON.stringify(data)
-    })
+      body: JSON.stringify(data),
+    });
 
-    const result = await response.json()
+    const result = await response.json();
     if (!response.ok) {
-      throw new Error(result.error?.message || result.error || 'Failed to fetch from OpenAI')
+      throw new Error(
+        result.error?.message || result.error || 'Failed to fetch from OpenAI',
+      );
     }
 
-    return result.choices[0].message.content
+    return result.choices[0].message.content;
   } catch (err) {
-    throw new Error(err.message)
+    throw new Error((err as Error).message);
   }
-}
+};
 
 export default async (options: any) => {
   try {
-    const { provider } = options
+    const { provider } = options;
 
     if (provider === 'ollama') {
-      return ollamaApis(options)
+      return await ollamaApis(options);
     } else if (provider === 'openai' || provider === 'lm-studio') {
-      return openaiApis(options)
+      return await openaiApis(options);
     } else {
-      throw new Error('🔴 No supported provider found')
+      throw new Error('🔴 No supported provider found');
     }
   } catch (err) {
-    throw new Error(err.message)
+    throw new Error((err as Error).message);
   }
-}
+};

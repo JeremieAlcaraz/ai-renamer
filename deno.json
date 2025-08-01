@@ -12,5 +12,6 @@
       "tags": ["recommended"],
       "exclude": ["no-explicit-any"]
     }
-  }
+  },
+  "nodeModulesDir": "auto"
 }

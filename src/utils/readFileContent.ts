@@ -1,22 +1,23 @@
-const path = require('path')
-const pdf = require('pdf-parse')
-const fs = require('fs').promises
+import * as path from 'https://deno.land/std/path/mod.ts';
+// @deno-types="npm:@types/pdf-parse@1.1.5"
+import pdf from 'npm:pdf-parse';
+import { Buffer } from 'node:buffer';
 
-module.exports = async ({ filePath }) => {
+export default async ({ filePath }: { filePath: string }): Promise<string> => {
   try {
-    const ext = path.extname(filePath).toLowerCase()
+    const ext = path.extname(filePath).toLowerCase();
 
-    let content = ''
+    let content = '';
     if (ext === '.pdf') {
-      const dataBuffer = await fs.readFile(filePath)
-      const pdfData = await pdf(dataBuffer)
-      content = pdfData.text.trim()
+      const dataBuffer = await Deno.readFile(filePath);
+      const pdfData = await pdf(Buffer.from(dataBuffer));
+      content = pdfData.text.trim();
     } else {
-      content = fs.readFile(filePath, 'utf8')
+      content = await Deno.readTextFile(filePath);
     }
 
-    return content
+    return content;
   } catch (err) {
-    throw new Error(err.message)
+    throw new Error((err as Error).message);
   }
-}
+};
