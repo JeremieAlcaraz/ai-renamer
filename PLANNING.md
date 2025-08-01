@@ -7,7 +7,7 @@ L'objectif de cette première étape est de refactoriser la base de code JavaScr
 **Tâches :**
 
 1.  **Créer une structure de dossiers :**
-    *   `src/utils` : Pour les fonctions utilitaires (ex: `changeCase.js`, `isImage.js`, `isVideo.js`, `supportedExtensions.js`).
+    [x]    `src/utils` : Pour les fonctions utilitaires (ex: `changeCase.js`, `isImage.js`, `isVideo.js`, `supportedExtensions.js`).
     *   `src/core` : Pour la logique métier principale (ex: `processFile.js`, `processDirectory.js`, `getNewName.js`).
     *   `src/services` : Pour les services externes (ex: `getModelResponse.js`).
     *   `src/config` : Pour la configuration (ex: `configureYargs.js`).
