@@ -135,15 +135,15 @@ The migration will be carried out in several logical steps, with each step being
 ### Step 1: Code Refactoring and Structuring
 
 - [x] Organize existing JavaScript code into a more modular structure.
-- [ ] Improve code readability and maintainability.
-- [ ] Validate this step by running the existing test suite (if any) or by manual testing.
+- [x] Improve code readability and maintainability.
+- [x] Validate this step by running the existing test suite (if any) or by manual testing.
 
 ### Step 2: Migration to Deno and TypeScript
 
-- [ ] Set up the Deno environment.
-- [ ] Convert JavaScript files to TypeScript.
-- [ ] Replace Node.js-specific APIs with Deno equivalents.
-- [ ] Validate this step by ensuring the application runs correctly in the Deno environment.
+- [x] Set up the Deno environment.
+- [x] Convert JavaScript files to TypeScript.
+- [x] Replace Node.js-specific APIs with Deno equivalents.
+- [x] Validate this step by ensuring the application runs correctly in the Deno environment.
 
 ### Step 3: OpenAI API Update
 
