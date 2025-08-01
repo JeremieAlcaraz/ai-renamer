@@ -1,28 +1,29 @@
-const os = require('os')
-const path = require('path')
-const yargs = require('yargs')
-const fs = require('fs').promises
-const { hideBin } = require('yargs/helpers')
+import { yargs } from 'https://deno.land/x/yargs/deno.ts'
+import { hideBin } from 'https://deno.land/x/yargs/helpers.ts'
+import * as path from 'https://deno.land/std/path/mod.ts'
 
-const CONFIG_FILE = path.join(os.homedir(), 'ai-renamer.json')
+const CONFIG_FILE = path.join(Deno.env.get('HOME') || '', 'ai-renamer.json')
 
 const loadConfig = async () => {
   try {
-    const data = await fs.readFile(CONFIG_FILE, 'utf8')
+    const data = await Deno.readTextFile(CONFIG_FILE)
     return JSON.parse(data)
   } catch (err) {
-    return {}
+    if (err instanceof Deno.errors.NotFound) {
+      return {}
+    }
+    throw err
   }
 }
 
-const saveConfig = async ({ config }) => {
-  await fs.writeFile(CONFIG_FILE, JSON.stringify(config, null, 2))
+const saveConfig = async ({ config }: { config: Record<string, unknown> }) => {
+  await Deno.writeTextFile(CONFIG_FILE, JSON.stringify(config, null, 2))
 }
 
-module.exports = async () => {
+export default async () => {
   const config = await loadConfig()
 
-  const argv = yargs(hideBin(process.argv))
+  const argv = yargs(hideBin(Deno.args))
     .option('help', {
       alias: 'h',
       type: 'boolean',
@@ -36,7 +37,7 @@ module.exports = async () => {
     .option('api-key', {
       alias: 'a',
       type: 'string',
-      description: 'Set the API key if you\'re using openai as provider'
+      description: "Set the API key if you're using openai as provider"
     })
     .option('base-url', {
       alias: 'u',
@@ -81,7 +82,7 @@ module.exports = async () => {
 
   if (argv.help) {
     yargs.showHelp()
-    process.exit(0)
+    Deno.exit(0)
   }
 
   if (argv.provider) {

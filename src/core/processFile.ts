@@ -1,16 +1,16 @@
-const path = require('path')
-const { v4: uuidv4 } = require('uuid')
+import * as path from 'https://deno.land/std/path/mod.ts'
+import { v4 as uuidv4 } from 'https://deno.land/std/uuid/mod.ts'
 
-const isImage = require('../utils/isImage')
-const isVideo = require('../utils/isVideo')
-const saveFile = require('../utils/saveFile')
-const getNewName = require('./getNewName')
-const extractFrames = require('../utils/extractFrames')
-const readFileContent = require('../utils/readFileContent')
-const deleteDirectory = require('../utils/deleteDirectory')
-const isProcessableFile = require('../utils/isProcessableFile')
+import isImage from '../utils/isImage.ts'
+import isVideo from '../utils/isVideo.ts'
+import saveFile from '../utils/saveFile.ts'
+import getNewName from './getNewName.ts'
+import extractFrames from '../utils/extractFrames.ts'
+import readFileContent from '../utils/readFileContent.ts'
+import deleteDirectory from '../utils/deleteDirectory.ts'
+import isProcessableFile from '../utils/isProcessableFile.ts'
 
-module.exports = async options => {
+export default async (options: any) => {
   try {
     const { frames, filePath, inputPath } = options
 
@@ -27,12 +27,12 @@ module.exports = async options => {
 
     let content
     let videoPrompt
-    let images = []
+    let images: string[] = []
     let framesOutputDir
     if (isImage({ ext })) {
       images.push(filePath)
     } else if (isVideo({ ext })) {
-      framesOutputDir = `/tmp/ai-renamer/${uuidv4()}`
+      framesOutputDir = `/tmp/ai-renamer/${uuidv4.generate()}`
       const _extractedFrames = await extractFrames({
         frames,
         framesOutputDir,

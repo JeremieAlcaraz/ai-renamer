@@ -1,34 +1,30 @@
-const axios = require('axios')
-
-const ollamaApis = async ({ baseURL }) => {
+const ollamaApis = async ({ baseURL }: { baseURL: string }) => {
   try {
-    const apiResult = await axios({
-      data: {},
-      method: 'get',
-      url: `${baseURL}/api/tags`
-    })
-
-    return apiResult.data.models
+    const response = await fetch(`${baseURL}/api/tags`)
+    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to fetch models from Ollama')
+    }
+    return data.models
   } catch (err) {
-    throw new Error(err?.response?.data?.error || err.message)
+    throw new Error(err.message)
   }
 }
 
-const lmStudioApis = async ({ baseURL }) => {
+const lmStudioApis = async ({ baseURL }: { baseURL: string }) => {
   try {
-    const apiResult = await axios({
-      data: {},
-      method: 'get',
-      url: `${baseURL}/v1/models`
-    })
-
-    return apiResult.data.data
+    const response = await fetch(`${baseURL}/v1/models`)
+    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to fetch models from LM Studio')
+    }
+    return data.data
   } catch (err) {
-    throw new Error(err?.response?.data?.error || err.message)
+    throw new Error(err.message)
   }
 }
 
-const listModels = async options => {
+const listModels = async (options: any) => {
   try {
     const { provider } = options
 
@@ -50,7 +46,7 @@ const listModels = async options => {
   }
 }
 
-const filterModelNames = arr => {
+const filterModelNames = (arr: any[]) => {
   return arr.map((item) => {
     if (item.id !== undefined) {
       return { name: item.id }
@@ -62,7 +58,7 @@ const filterModelNames = arr => {
   })
 }
 
-const chooseModel = ({ models }) => {
+const chooseModel = ({ models }: { models: { name: string }[] }) => {
   const preferredModels = [
     'llava',
     'llama',
@@ -77,14 +73,14 @@ const chooseModel = ({ models }) => {
 
   for (const modelName of preferredModels) {
     if (models.some(model => model.name.toLowerCase().includes(modelName))) {
-      return models.find(model => model.name.toLowerCase().includes(modelName)).name
+      return models.find(model => model.name.toLowerCase().includes(modelName))?.name
     }
   }
 
   return models.length > 0 ? models[0].name : null
 }
 
-module.exports = async options => {
+export default async (options: any) => {
   try {
     const _models = await listModels(options)
     const models = filterModelNames(_models)

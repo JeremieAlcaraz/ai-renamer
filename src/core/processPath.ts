@@ -1,10 +1,8 @@
-const fs = require('fs').promises
+import processFile from './processFile.ts'
+import chooseModel from '../services/chooseModel.ts'
+import processDirectory from './processDirectory.ts'
 
-const processFile = require('./processFile')
-const chooseModel = require('../services/chooseModel')
-const processDirectory = require('./processDirectory')
-
-module.exports = async ({
+export default async ({
   inputPath,
   defaultCase,
   defaultModel,
@@ -16,7 +14,7 @@ module.exports = async ({
   defaultProvider,
   defaultCustomPrompt,
   defaultIncludeSubdirectories
-}) => {
+}: any) => {
   try {
     const provider = defaultProvider || 'ollama'
     console.log(`⚪ Provider: ${provider}`)
@@ -61,7 +59,7 @@ module.exports = async ({
 
     console.log('--------------------------------------------------')
 
-    const stats = await fs.stat(inputPath)
+    const stats = await Deno.stat(inputPath)
     const options = {
       model,
       _case,
@@ -76,9 +74,9 @@ module.exports = async ({
       customPrompt
     }
 
-    if (stats.isDirectory()) {
+    if (stats.isDirectory) {
       await processDirectory({ options, inputPath })
-    } else if (stats.isFile()) {
+    } else if (stats.isFile) {
       await processFile({ ...options, filePath: inputPath })
     }
   } catch (err) {
