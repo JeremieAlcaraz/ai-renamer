@@ -1,14 +1,14 @@
 const path = require('path')
 const { v4: uuidv4 } = require('uuid')
 
-const isImage = require('./isImage')
-const isVideo = require('./isVideo')
-const saveFile = require('./saveFile')
+const isImage = require('../utils/isImage')
+const isVideo = require('../utils/isVideo')
+const saveFile = require('../utils/saveFile')
 const getNewName = require('./getNewName')
-const extractFrames = require('./extractFrames')
-const readFileContent = require('./readFileContent')
-const deleteDirectory = require('./deleteDirectory')
-const isProcessableFile = require('./isProcessableFile')
+const extractFrames = require('../utils/extractFrames')
+const readFileContent = require('../utils/readFileContent')
+const deleteDirectory = require('../utils/deleteDirectory')
+const isProcessableFile = require('../utils/isProcessableFile')
 
 module.exports = async options => {
   try {

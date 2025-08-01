@@ -1,7 +1,7 @@
 const fs = require('fs').promises
 
 const processFile = require('./processFile')
-const chooseModel = require('./chooseModel')
+const chooseModel = require('../services/chooseModel')
 const processDirectory = require('./processDirectory')
 
 module.exports = async ({

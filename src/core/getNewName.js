@@ -1,5 +1,5 @@
-const changeCase = require('./changeCase')
-const getModelResponse = require('./getModelResponse')
+const changeCase = require('../utils/changeCase')
+const getModelResponse = require('../services/getModelResponse')
 
 module.exports = async options => {
   const { _case, chars, content, language, videoPrompt, customPrompt, relativeFilePath } = options

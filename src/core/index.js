@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const processPath = require('./processPath')
-const configureYargs = require('./configureYargs')
+const configureYargs = require('../config/configureYargs')
 
 const main = async () => {
   try {
