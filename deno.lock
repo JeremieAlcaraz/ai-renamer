@@ -5,6 +5,7 @@
     "npm:@types/pdf-parse@1.1.5": "1.1.5",
     "npm:axios@^1.7.2": "1.11.0",
     "npm:change-case@^5.4.4": "5.4.4",
+    "npm:pdf-parse@*": "1.1.1",
     "npm:pdf-parse@^1.1.1": "1.1.1",
     "npm:standard@^17.1.0": "17.1.2_eslint@8.57.1_eslint-plugin-import@2.32.0__eslint@8.57.1_eslint-plugin-n@15.7.0__eslint@8.57.1_eslint-plugin-promise@6.6.0__eslint@8.57.1_eslint-plugin-react@7.37.5__eslint@8.57.1",
     "npm:uuid@10": "10.0.0",
