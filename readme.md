@@ -21,7 +21,7 @@ The migration will be carried out in several logical steps, with each step being
 
 ### Step 1: Code Refactoring and Structuring
 
--   [ ] Organize existing JavaScript code into a more modular structure.
+-   [x] Organize existing JavaScript code into a more modular structure.
 -   [ ] Improve code readability and maintainability.
 -   [ ] Validate this step by running the existing test suite (if any) or by manual testing.
 
