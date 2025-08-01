@@ -1,7 +1,7 @@
 export default async ({ folderPath }: { folderPath: string }) => {
   try {
-    await Deno.remove(folderPath, { recursive: true })
+    await Deno.remove(folderPath, { recursive: true });
   } catch (err) {
-    console.log(err.message)
+    console.log((err as Error).message);
   }
-}
+};
