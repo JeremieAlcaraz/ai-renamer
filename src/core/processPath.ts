@@ -63,7 +63,6 @@ export default async ({
     if (assistantId) {
       console.log(`⚪ Assistant ID: ${assistantId}`);
     }
-
     console.log('--------------------------------------------------');
 
     const stats = await Deno.stat(inputPath);

@@ -62,6 +62,7 @@ const openaiAssistantApis = async (
       },
     ];
 
+
     if (images && images.length > 0) {
       for (const imagePath of images) {
         const imageData = await Deno.readFile(imagePath);
@@ -79,6 +80,7 @@ const openaiAssistantApis = async (
       headers,
       body: JSON.stringify(messages[0]),
     });
+
 
     const runRes = await fetch(`${baseURL}/v1/threads/${thread.id}/runs`, {
       method: 'POST',
@@ -120,6 +122,7 @@ const openaiAssistantApis = async (
       m.role === 'assistant'
     );
     return assistantMessage?.content[0]?.text?.value || '';
+
   } catch (err) {
     throw new Error((err as Error).message);
   }
